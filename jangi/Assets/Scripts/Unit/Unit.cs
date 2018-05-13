@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EUNITTYPE {
-	E_SOL,
+	E_SOL = 1,
 	E_CAR,
 	E_HOR,
 	E_COW,
@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour {
 		transform.position = position;
 
 		this.team = team;
-		if(team == 0) 
+		if(team == -1) 
 			unitName.color = Color.red;
 		else
 			unitName.color = Color.blue;
@@ -67,5 +67,13 @@ public class Unit : MonoBehaviour {
 	public void SetYX(int y, int x) {
 		this.y = y;
 		this.x = x;
+
+		position.x = (-4f * 1.31f) + (x * 1.31f);
+		position.y = (3.81f) + (0.85f * -y);
+		transform.position = position;
+	}
+
+	void OnMouseDown() {
+		GameMNG.I.ClickUnit(y, x, gameObject);
 	}
 }
