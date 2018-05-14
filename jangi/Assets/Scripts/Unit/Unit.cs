@@ -53,9 +53,9 @@ public class Unit : MonoBehaviour {
 		if(eType == EUNITTYPE.E_CAR) 
 			unitName.text = "차";
 		if(eType == EUNITTYPE.E_HOR) 
-			unitName.text = "말";
+			unitName.text = "마";
 		if(eType == EUNITTYPE.E_COW) 
-			unitName.text = "소";
+			unitName.text = "상";
 		if(eType == EUNITTYPE.E_TNK) 
 			unitName.text = "포";
 		if(eType == EUNITTYPE.E_SA) 

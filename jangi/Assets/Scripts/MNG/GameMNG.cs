@@ -101,18 +101,21 @@ public class GameMNG : MonoBehaviour {
 		ClearLight();
 			
 		canWay = UnitWay.I.GetWay(y,x,EUNITTYPE.E_SOL);
-		//canWay = UnitWay.I.GetWay(y,x,(EUNITTYPE)Mathf.Abs(map[y,x]));
-		for(int i=0; i<10; i++) {
-			for(int j=0; j<9; j++) {
-				if(Mathf.Abs(canWay[i,j]) == 9) 
-					CreateLight(i, j);
-			}
-		}
+		
 		for(int i=0; i<32; i++) {
 			if(cUnit == units[i].unitObject)
 			{
 				clickIndex = i;
 				break;
+			}
+		}
+
+		//canWay = UnitWay.I.GetWay(y,x,units[clickIndex].unitType);
+
+		for(int i=0; i<10; i++) {
+			for(int j=0; j<9; j++) {
+				if(Mathf.Abs(canWay[i,j]) == 9) 
+					CreateLight(i, j);
 			}
 		}
 		clickY = y;
