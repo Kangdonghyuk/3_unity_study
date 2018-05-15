@@ -24,6 +24,12 @@ public class UNIT {
 		this.x = x;
 		unitScript.SetYX(y,x);
 	}
+
+	public void Die() {
+		y = 15;
+		x = 15;
+		unitScript.SetYX(y,x);
+	}
 };
 
 public class GameMNG : MonoBehaviour {
@@ -60,7 +66,7 @@ public class GameMNG : MonoBehaviour {
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 0, 8, EUNITTYPE.E_CAR, -1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 1, 4, EUNITTYPE.E_KING, -1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 2, 1, EUNITTYPE.E_TNK, -1);
-		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 2, 8, EUNITTYPE.E_TNK, -1);
+		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 2, 7, EUNITTYPE.E_TNK, -1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 3, 0, EUNITTYPE.E_SOL, -1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 3, 2, EUNITTYPE.E_SOL, -1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 3, 4, EUNITTYPE.E_SOL, -1);
@@ -77,7 +83,7 @@ public class GameMNG : MonoBehaviour {
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 9, 8, EUNITTYPE.E_CAR, 1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 8, 4, EUNITTYPE.E_KING, 1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 7, 1, EUNITTYPE.E_TNK, 1);
-		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 7, 8, EUNITTYPE.E_TNK, 1);
+		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 7, 7, EUNITTYPE.E_TNK, 1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 6, 0, EUNITTYPE.E_SOL, 1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 6, 2, EUNITTYPE.E_SOL, 1);
 		units[count++] = new UNIT((GameObject)Instantiate(unitPrefab), 6, 4, EUNITTYPE.E_SOL, 1);
@@ -100,7 +106,7 @@ public class GameMNG : MonoBehaviour {
 	public void ClickUnit(int y, int x, GameObject cUnit) {
 		ClearLight();
 			
-		canWay = UnitWay.I.GetWay(y,x,EUNITTYPE.E_SOL);
+		//canWay = UnitWay.I.GetWay(y,x,EUNITTYPE.E_SOL);
 		
 		for(int i=0; i<32; i++) {
 			if(cUnit == units[i].unitObject)
@@ -110,7 +116,7 @@ public class GameMNG : MonoBehaviour {
 			}
 		}
 
-		//canWay = UnitWay.I.GetWay(y,x,units[clickIndex].unitType);
+		canWay = UnitWay.I.GetWay(y,x,units[clickIndex].unitType);
 
 		for(int i=0; i<10; i++) {
 			for(int j=0; j<9; j++) {
@@ -127,6 +133,14 @@ public class GameMNG : MonoBehaviour {
 		for(int y=0; y<10; y++) {
 			for(int x=0; x<9; x++) {
 				if(lights[y,x] == light) {
+					if(map[y,x] != 0) {
+						for(int t=0; t<32; t++) {
+							if(units[t].y == y && units[t].x == x) {
+								units[t].Die();
+								break;
+							}
+						}
+					}
 					map[y,x] = ((int)units[clickIndex].unitType * units[clickIndex].team);
 					units[clickIndex].SetYX(y,x);
 					break;
